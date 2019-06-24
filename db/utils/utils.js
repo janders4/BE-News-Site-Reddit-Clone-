@@ -1,5 +1,17 @@
-exports.formatDate = list => {};
+const formatDate = list => {
+  //const javaScriptTime = new Date(list);
+  //return javaScriptTime.toString();
+  const newList = [...list];
+  newList.forEach(item => {
+    item["created_at"] = new Date(item["created_at"]);
+    item["created_at"] = item["created_at"].toString();
+  });
+  console.log(newList);
+  return newList;
+};
 
-exports.makeRefObj = list => {};
+const makeRefObj = list => {};
 
-exports.formatComments = (comments, articleRef) => {};
+const formatComments = (comments, articleRef) => {};
+
+module.exports = { formatDate, makeRefObj, formatComments };
