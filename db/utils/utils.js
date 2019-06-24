@@ -10,7 +10,14 @@ const formatDate = list => {
   return newList;
 };
 
-const makeRefObj = list => {};
+const makeRefObj = list => {
+  return list.length === 0
+    ? {}
+    : list.reduce((refs, row) => {
+        refs[row["article_id"]] = row["title"];
+        return refs;
+      }, {});
+};
 
 const formatComments = (comments, articleRef) => {};
 

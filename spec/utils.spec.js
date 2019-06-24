@@ -33,8 +33,52 @@ describe("formatDate", () => {
   });
 });
 
-describe("makeRefObj", () => {
-  it("", () => {});
+describe.only("makeRefObj", () => {
+  const testData = [
+    {
+      article_id: "1",
+      title: "Living in the shadow of a great man",
+      topic: "mitch",
+      author: "butter_bridge",
+      body: "I find this existence challenging",
+      created_at: 1542284514171,
+      votes: 100
+    }
+  ];
+  const testData2 = [
+    {
+      article_id: "1",
+      title: "Living in the shadow of a great man",
+      topic: "mitch",
+      author: "butter_bridge",
+      body: "I find this existence challenging",
+      created_at: 1542284514171,
+      votes: 100
+    },
+    {
+      article_id: "1",
+      title: "Living in the shadow of a great man",
+      topic: "mitch",
+      author: "butter_bridge",
+      body: "I find this existence challenging",
+      created_at: 1542284514171,
+      votes: 100
+    }
+  ];
+  it("returns an object when passed an array", () => {
+    expect(makeRefObj([])).to.eql({});
+  });
+  it("returns a ref object when passed an array of 1 object", () => {
+    expect(makeRefObj(testData)).to.eql({
+      "1": "Living in the shadow of a great man"
+    });
+  });
+  it("works for multiple objects in an array", () => {
+    expect(makeRefObj(testData2)).to.eql({
+      "1": "Living in the shadow of a great man",
+      "1": "Living in the shadow of a great man"
+    });
+  });
 });
 
 describe("formatComments", () => {});
