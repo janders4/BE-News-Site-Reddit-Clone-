@@ -81,7 +81,7 @@ describe("makeRefObj", () => {
   });
 });
 
-describe.only("formatComments", () => {
+describe("formatComments", () => {
   it("returns a new array", () => {
     const input = [];
     expect(formatComments(input)).to.not.equal(input);

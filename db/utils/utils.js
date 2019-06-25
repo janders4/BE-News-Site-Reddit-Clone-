@@ -25,7 +25,6 @@ const formatComments = (comments, articleRef) => {
     delete item["belongs_to"];
     item["article_id"] = articleRef[item["article_id"]];
   });
-  console.log(newComments);
   return formatDate(newComments);
 };
 

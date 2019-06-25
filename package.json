@@ -7,10 +7,11 @@
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "NODE_ENV=test knex seed:run",
     "test-utils": "mocha spec/utils.spec.js",
-    "test": "mocha spec/utils.spec.js",
+    "test": "mocha spec/index.spec.js",
     "migrate-make": "knex migrate:make",
     "migrate-latest": "NODE_ENV=test knex migrate:latest",
-    "migrate-rollback": "NODE_ENV=test knex migrate:rollback"
+    "migrate-rollback": "NODE_ENV=test knex migrate:rollback",
+    "query": "psql -f db/queries.sql > db/output.txt"
   },
   "repository": {
     "type": "git",

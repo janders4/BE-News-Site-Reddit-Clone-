@@ -10,6 +10,6 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  console.log("destroying comments table");
+  //console.log("destroying comments table");
   return knex.schema.dropTable("comments");
 };
