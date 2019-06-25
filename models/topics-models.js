@@ -5,7 +5,6 @@ exports.fetchTopics = () => {
     .from("topics")
     .returning("*")
     .then(data => {
-      console.log({ topics: data });
       return { topics: data };
     });
 };
