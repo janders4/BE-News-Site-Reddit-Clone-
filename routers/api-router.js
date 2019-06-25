@@ -1,11 +1,8 @@
 const express = require("express");
-const { getTopics } = require("../controllers/topics-controllers");
 const apiRouter = express.Router();
-const { error405 } = require("../error-handling/error-400s");
+const { topicsRouter } = require("./topics-router");
+const { usersRouter } = require("./users-router");
 
-apiRouter
-  .route("/topics")
-  .get(getTopics)
-  .all(error405);
-
+apiRouter.use("/topics", topicsRouter);
+apiRouter.use("/users", usersRouter);
 module.exports = { apiRouter };

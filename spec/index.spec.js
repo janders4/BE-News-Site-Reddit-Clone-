@@ -27,4 +27,19 @@ describe.only("/api", () => {
       });
     });
   });
+  describe("/users", () => {
+    describe("get by id method", () => {
+      it("happy path, gets user by username", () => {
+        return request
+          .get("/api/users/butter_bridge")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("object");
+          });
+      });
+      it("returns a 405 error when bad method used", () => {
+        return request.post("/api/users/butter_bridge").expect(405);
+      });
+    });
+  });
 });
