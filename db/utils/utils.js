@@ -2,7 +2,7 @@ const formatDate = list => {
   const newList = [...list];
   newList.forEach(item => {
     item["created_at"] = new Date(item["created_at"]);
-    item["created_at"] = item["created_at"].toString();
+    item["created_at"] = item["created_at"]; //.toString();
   });
   return newList;
 };
