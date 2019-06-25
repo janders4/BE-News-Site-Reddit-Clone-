@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const { apiRouter } = require("./routers/api-router");
 const { error500s } = require("./error-handling/error-500s");
-const { error400s, error404 } = require("./error-handling/error-400s");
+const { error400, error404 } = require("./error-handling/error-400s");
 
 app.use(express.json());
 
@@ -14,8 +14,11 @@ app.all("/*", (req, res, next) => {
 });
 
 //errors
+app.use(error400);
 app.use(error404);
-app.use(error400s);
 app.use(error500s);
 
 module.exports = { app };
+
+//nock
+//winston logging tool

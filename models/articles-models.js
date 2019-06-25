@@ -15,14 +15,11 @@ exports.fetchArticleById = article_id => {
 };
 
 exports.patchVotesById = (patchObject, article_id) => {
-  console.log({ article_id });
-  console.log(patchObject);
   return connection("articles")
     .where({ article_id })
     .increment({ votes: patchObject.inc_votes })
     .returning("*")
     .then(([article]) => {
-      console.log(article);
       return { article: article };
     });
 };

@@ -60,7 +60,7 @@ describe.only("/api", () => {
           return request.get("/api/articles/10000").expect(404);
         });
       });
-      describe.only('"patch article by id', () => {
+      describe('"patch article by id', () => {
         it("happy path, article patched by id", () => {
           const patchObject = { inc_votes: 1 };
           return request
@@ -71,6 +71,37 @@ describe.only("/api", () => {
               expect(res.body.article).to.be.an("object");
               expect(res.body.article.votes).to.equal(101);
             });
+        });
+        it("decrements the vote count if passed a negative number ", () => {
+          const patchObject = { inc_votes: -1 };
+          return request
+            .patch("/api/articles/1")
+            .send(patchObject)
+            .expect(200)
+            .then(res => {
+              expect(res.body.article).to.be.an("object");
+              expect(res.body.article.votes).to.equal(99);
+            });
+        });
+        it("returns a 405 error when bad method used", () => {
+          return request.post("/api/articles/1").expect(405);
+        });
+        it("returns 404 for bad path", () => {
+          return request.get("/api/articles/10000").expect(404);
+        });
+        it("returns 400 when patching a value with incorrect type", () => {
+          const patchObject = { inc_votes: "one" };
+          return request
+            .patch("/api/articles/1")
+            .send(patchObject)
+            .expect(400);
+        });
+        it("returns 400 when missing required columns", () => {
+          const patchObject = { not_real: 1 };
+          return request
+            .patch("/api/articles/1")
+            .send(patchObject)
+            .expect(400);
         });
       });
     });
