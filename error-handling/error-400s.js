@@ -5,6 +5,15 @@ exports.error405 = (req, res, next) => {
     .send(message)
     .catch(next);
 };
+exports.error404 = (err, req, res, next) => {
+  if (err.status === 404) {
+    const message = { msg: "bad request" };
+    res
+      .status(404)
+      .send(message)
+      .catch(next);
+  }
+};
 
 exports.error400s = (err, req, res, next) => {
   const codes = [];
