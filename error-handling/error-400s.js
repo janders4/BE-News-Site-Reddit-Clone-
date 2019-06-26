@@ -13,6 +13,7 @@ exports.error405 = (req, res, next) => {
     .catch(next);
 };
 exports.error404 = (err, req, res, next) => {
+  //TODO 42702 add handler for this error collum ambiguous
   if (err.status === 404) {
     const message = { msg: "bad request" };
     res

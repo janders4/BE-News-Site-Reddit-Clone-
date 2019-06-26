@@ -51,8 +51,10 @@ describe.only("/api", () => {
             .expect(200)
             .then(res => {
               expect(res.body).to.be.an("object");
+              expect(res.body.article.comment_count).to.equal(1);
             });
         });
+
         it("returns a 405 error when bad method used", () => {
           return request.post("/api/articles/1").expect(405);
         });

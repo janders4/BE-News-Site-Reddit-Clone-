@@ -1,8 +1,8 @@
 const formatDate = list => {
-  const newList = [...list];
-  newList.forEach(item => {
-    item["created_at"] = new Date(item["created_at"]);
-    item["created_at"] = item["created_at"]; //.toString();
+  const newList = [];
+  list.forEach((item, index) => {
+    newList[index] = { ...item };
+    newList[index].created_at = new Date(item.created_at);
   });
   return newList;
 };
@@ -17,13 +17,14 @@ const makeRefObj = list => {
 };
 
 const formatComments = (comments, articleRef) => {
-  const newComments = [...comments];
-  newComments.forEach(item => {
-    item["author"] = item["created_by"];
-    item["article_id"] = item["belongs_to"];
-    delete item["created_by"];
-    delete item["belongs_to"];
-    item["article_id"] = articleRef[item["article_id"]];
+  const newComments = [];
+  comments.forEach((item, index) => {
+    newComments[index] = { ...item };
+    newComments[index].author = item["created_by"];
+    newComments[index]["article_id"] = item["belongs_to"];
+    delete newComments[index]["created_by"];
+    delete newComments[index]["belongs_to"];
+    newComments[index]["article_id"] = articleRef[item["article_id"]];
   });
   return formatDate(newComments);
 };
