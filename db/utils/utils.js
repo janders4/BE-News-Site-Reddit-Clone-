@@ -21,10 +21,9 @@ const formatComments = (comments, articleRef) => {
   comments.forEach((item, index) => {
     newComments[index] = { ...item };
     newComments[index].author = item["created_by"];
-    newComments[index]["article_id"] = item["belongs_to"];
     delete newComments[index]["created_by"];
+    newComments[index]["article_id"] = articleRef[item["belongs_to"]];
     delete newComments[index]["belongs_to"];
-    newComments[index]["article_id"] = articleRef[item["article_id"]];
   });
   return formatDate(newComments);
 };

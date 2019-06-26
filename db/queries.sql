@@ -2,3 +2,4 @@
 SELECT article_id, created_at FROM articles;
 SELECT * FROM topics;
 SELECT username FROM users;
+SELECT article_id FROM comments;

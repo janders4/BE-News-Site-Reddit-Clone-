@@ -1,5 +1,5 @@
 exports.error400 = (err, req, res, next) => {
-  const codes = ["22P02"];
+  const codes = ["22P02", "23503", "23502", "42702", "42703"];
   //console.log(err.code);
   const message = { msg: "error: bad method" };
   return codes.includes(err.code) ? res.status(400).send(message) : next(err);

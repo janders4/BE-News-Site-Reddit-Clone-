@@ -28,3 +28,25 @@ exports.patchVotesById = (patchObject, article_id) => {
       return { article: article };
     });
 };
+
+exports.postComment = (postObject, article_id) => {
+  return connection("comments")
+    .where({ article_id })
+    .insert({ author: postObject.username, body: postObject.body })
+    .returning("*")
+    .then(([comment]) => {
+      return { comment: { comment } };
+    });
+};
+
+//insert params for sorting query
+exports.getComment = (article_id, params) => {
+  return connection("comments")
+    .select("*")
+    .where({ article_id })
+    .returning("*")
+    .orderBy(params.sort_by || "created_at", params.order || "DESC")
+    .then(comment => {
+      return comment;
+    });
+};

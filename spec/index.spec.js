@@ -4,6 +4,7 @@ const request = require("supertest")(app);
 const chai = require("chai");
 const expect = chai.expect;
 const { connection } = require("../connection");
+chai.use(require("chai-sorted"));
 
 describe.only("/api", () => {
   beforeEach(() => {
@@ -103,6 +104,82 @@ describe.only("/api", () => {
           return request
             .patch("/api/articles/1")
             .send(patchObject)
+            .expect(400);
+        });
+      });
+      describe("post comment by article id. /articles/:article_id/comments", () => {
+        it("happy path, posts a new comment by article id", () => {
+          const postObject = {
+            username: "lurker",
+            body: "don't be fooled, this book is pure filth"
+          };
+          return request
+            .post("/api/articles/1/comments")
+            .send(postObject)
+            .expect(201)
+            .then(res => {
+              expect(res.body.comment).to.be.an("object");
+            });
+        });
+        it("returns a 405 error when bad method used", () => {
+          return request.patch("/api/articles/1/comments").expect(405);
+        });
+        it("returns 400 when missing required columns", () => {
+          const postObject = { not_real: 1 };
+          return request
+            .post("/api/articles/1/comments")
+            .send(postObject)
+            .expect(400);
+        });
+        it("returns 400 when patching a value with incorrect type", () => {
+          const postObject = {
+            username: 12,
+            body: "don't be fooled, this book is pure filth"
+          };
+          return request
+            .post("/api/articles/1/comments")
+            .send(postObject)
+            .expect(400);
+        });
+        it("returns 404 for bad path", () => {
+          return request.post("/api/articles/10000/ccc").expect(404);
+        });
+      });
+      describe.only("get comment by article id. /articles/:article_id/comments", () => {
+        it("happy path. gets comments by article_id", () => {
+          return request
+            .get("/api/articles/1/comments")
+            .expect(200)
+            .then(res => {
+              expect(res.body).to.be.an("array");
+            });
+        });
+        it("is sorted on its default values of created at and desc", () => {
+          return request
+            .get("/api/articles/1/comments")
+            .expect(200)
+            .then(res => {
+              expect(res.body).to.be.descendingBy("created_at");
+            });
+        });
+        it("can be sorted by a collum passed in the request", () => {
+          return request
+            .get("/api/articles/1/comments?sort_by=votes&order=asc")
+            .expect(200)
+            .then(res => {
+              expect(res.body).to.be.ascendingBy("votes");
+            });
+        });
+        it("returns a 405 error when bad method used", () => {
+          return request.patch("/api/articles/1/comments").expect(405);
+        });
+        it("returns 404 for bad path", () => {
+          return request.get("/api/articles/10000/ccc").expect(404);
+        });
+        it("returns 400 when sorting by missing columns", () => {
+          const postObject = { not_real: 1 };
+          return request
+            .get("/api/articles/1/comments?sort_by=cabbage&order=asc")
             .expect(400);
         });
       });
