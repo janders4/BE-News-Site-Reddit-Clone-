@@ -4,11 +4,11 @@ const { topicsRouter } = require("./topics-router");
 const { usersRouter } = require("./users-router");
 const { articlesRouter } = require("./articles-router");
 const { commentsRouter } = require("./comments-router");
-const { endpoints } = require("../endpoints.json");
+//const { endpoints } = require("../endpoints.json");
 
-apiRouter.get("/", (req, res, next) => {
-  res.status(200).send(endpoints);
-});
+// apiRouter.get("/", (req, res, next) => {
+//   res.status(200).send(res.body);
+// });
 apiRouter.use("/topics", topicsRouter);
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/articles", articlesRouter);

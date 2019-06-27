@@ -86,56 +86,6 @@ describe("formatComments", () => {
     const input = [];
     expect(formatComments(input)).to.not.equal(input);
   });
-  // it("changes the keys of a single object in an array", () => {
-  //   const testData = [
-  //     {
-  //       body:
-  //         "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
-  //       belongs_to:
-  //         "The People Tracking Every Touch, Pass And Tackle in the World Cup",
-  //       created_by: "tickle122",
-  //       votes: -1,
-  //       created_at: 1468087638932
-  //     }
-  //   ];
-  //   const output = [
-  //     {
-  //       body:
-  //         "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
-  //       article_id:
-  //         "The People Tracking Every Touch, Pass And Tackle in the World Cup",
-  //       author: "tickle122",
-  //       votes: -1,
-  //       created_at: "Sat Jul 09 2016 19:07:18 GMT+0100 (British Summer Time)"
-  //     }
-  //   ];
-  //   expect(formatComments(testData)).to.eql(output);
-  // });
-  // it("changes the time to javascript object", () => {
-  //   const testData = [
-  //     {
-  //       body:
-  //         "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
-  //       belongs_to:
-  //         "The People Tracking Every Touch, Pass And Tackle in the World Cup",
-  //       created_by: "tickle122",
-  //       votes: -1,
-  //       created_at: 1468087638932
-  //     }
-  //   ];
-  //   const output = [
-  //     {
-  //       body:
-  //         "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
-  //       article_id:
-  //         "The People Tracking Every Touch, Pass And Tackle in the World Cup",
-  //       author: "tickle122",
-  //       votes: -1,
-  //       created_at: "Sat Jul 09 2016 19:07:18 GMT+0100 (British Summer Time)"
-  //     }
-  //   ];
-  //   expect(formatComments(testData)).to.eql(output);
-  // });
   it("article_id must be the id corresponding to the original title value provided", () => {
     const dummyref = makeRefObj([
       {

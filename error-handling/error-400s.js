@@ -15,7 +15,7 @@ exports.error405 = (req, res, next) => {
 exports.error404 = (err, req, res, next) => {
   //TODO 42702 add handler for this error collum ambiguous
   if (err.status === 404) {
-    const message = { msg: "bad request" };
+    const message = { msg: "error: not found" };
     res
       .status(404)
       .send(message)

@@ -8,12 +8,10 @@ const formatDate = list => {
 };
 
 const makeRefObj = list => {
-  return list.length === 0
-    ? {}
-    : list.reduce((refs, row) => {
-        refs[row["title"]] = row["article_id"];
-        return refs;
-      }, {});
+  return list.reduce((refs, row) => {
+    refs[row["title"]] = row["article_id"];
+    return refs;
+  }, {});
 };
 
 const formatComments = (comments, articleRef) => {

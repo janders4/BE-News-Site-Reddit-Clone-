@@ -3,7 +3,7 @@ const { app } = require("../app");
 const request = require("supertest")(app);
 const chai = require("chai");
 const expect = chai.expect;
-const { connection } = require("../connection");
+const { connection } = require("../db/connection");
 chai.use(require("chai-sorted"));
 
 describe("/api", () => {
@@ -102,10 +102,8 @@ describe("/api", () => {
           return request.get("/api/articles/10000").expect(404);
         });
       });
-      //
-      //
-      describe.only('"patch article by id', () => {
-        it.only("happy path, article patched by id", () => {
+      describe('"patch article by id', () => {
+        it("happy path, article patched by id", () => {
           const patchObject = { inc_votes: 1 };
           return request
             .patch("/api/articles/1")
