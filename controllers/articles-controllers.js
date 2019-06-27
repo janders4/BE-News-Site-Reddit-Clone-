@@ -1,5 +1,6 @@
 const {
   fetchArticleById,
+  fetchArticlesNoId,
   patchVotesById,
   postComment,
   getComment
@@ -11,6 +12,14 @@ exports.getArticleById = (req, res, next) => {
     .then(article => {
       //console.log(article);
       res.status(200).send(article);
+    })
+    .catch(next);
+};
+
+exports.getArticlesNoId = (req, res, next) => {
+  fetchArticlesNoId(req.query)
+    .then(articles => {
+      res.status(200).send(articles);
     })
     .catch(next);
 };

@@ -19,6 +19,27 @@ exports.fetchArticleById = article_id => {
     });
 };
 
+exports.fetchArticlesNoId = params => {
+  return connection
+    .select("articles.*")
+    .from("articles")
+    .modify(query => {
+      if (params.author) query.where({ "articles.author": params.author });
+      if (params.topic) query.where({ "articles.topic": params.topic });
+    })
+    .returning("*")
+    .leftJoin("comments", "articles.article_id", "comments.article_id")
+    .groupBy("articles.article_id")
+    .count("articles.article_id as comment_count")
+    .orderBy(params.sort_by || "created_at", params.order || "DESC")
+    .then(articles => {
+      articles.forEach(
+        article => (article.comment_count = parseInt(article.comment_count))
+      );
+      return articles;
+    });
+};
+
 exports.patchVotesById = (patchObject, article_id) => {
   return connection("articles")
     .where({ article_id })

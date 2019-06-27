@@ -43,7 +43,47 @@ describe.only("/api", () => {
       });
     });
   });
+  // -------vv
   describe("/articles", () => {
+    describe("/articles only returns array of articles", () => {
+      it("returns an array of article objects", () => {
+        return request
+          .get("/api/articles")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("array");
+          });
+      });
+      it("can sort by any collumn and defaults to date", () => {
+        return request
+          .get("/api/articles/")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.descendingBy("created_at");
+          });
+      });
+      it("can sort by any collumns by query", () => {
+        return request
+          .get("/api/articles/?sort_by=author&order=asc")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.ascendingBy("author");
+          });
+      });
+      it("can filter by any auther or topic by query", () => {
+        return request.get("/api/articles/?author=rogersop").expect(200);
+      });
+      it("can filter by any auther or topic by query", () => {
+        return request.get("/api/articles/?topic=mitch").expect(200);
+      });
+      it("returns a 405 error when bad method used", () => {
+        return request.delete("/api/articles/").expect(405);
+      });
+      it("returns 404 for bad path", () => {
+        return request.get("/api/articlez/").expect(404);
+      });
+    });
+    //-----^^
     describe("/:articles_id", () => {
       describe("GET articles by id", () => {
         it("happy path, gets article by id", () => {
@@ -52,7 +92,7 @@ describe.only("/api", () => {
             .expect(200)
             .then(res => {
               expect(res.body).to.be.an("object");
-              expect(res.body.article.comment_count).to.equal(1);
+              expect(res.body.article.comment_count).to.equal(13);
             });
         });
 
@@ -145,7 +185,7 @@ describe.only("/api", () => {
           return request.post("/api/articles/10000/ccc").expect(404);
         });
       });
-      describe.only("get comment by article id. /articles/:article_id/comments", () => {
+      describe("get comment by article id. /articles/:article_id/comments", () => {
         it("happy path. gets comments by article_id", () => {
           return request
             .get("/api/articles/1/comments")
@@ -181,6 +221,66 @@ describe.only("/api", () => {
           return request
             .get("/api/articles/1/comments?sort_by=cabbage&order=asc")
             .expect(400);
+        });
+      });
+    });
+  });
+  describe("/comments", () => {
+    describe("/comments/:commentID", () => {
+      describe("patch", () => {
+        it("happy path - increments votes using patch objects", () => {
+          const patchObj = { inc_votes: 2 };
+          return request
+            .patch("/api/comments/1")
+            .send(patchObj)
+            .expect(200)
+            .then(({ body: { comment: { votes } } }) => {
+              expect(votes).to.equal(18);
+            });
+        });
+        it("decrements votes if passed negative number", () => {
+          const patchObj = { inc_votes: -2 };
+          return request
+            .patch("/api/comments/1")
+            .send(patchObj)
+            .expect(200)
+            .then(({ body: { comment: { votes } } }) => {
+              expect(votes).to.equal(14);
+            });
+        });
+        it("returns a 405 error when bad method used", () => {
+          return request.get("/api/comments/1").expect(405);
+        });
+        it("returns 404 for bad path", () => {
+          return request.get("/api/comments/").expect(404);
+        });
+        it("returns 400 when patching a value with incorrect type", () => {
+          const patchObject = { inc_votes: "one" };
+          return request
+            .patch("/api/comments/1")
+            .send(patchObject)
+            .expect(400);
+        });
+        it("returns 400 when missing required columns", () => {
+          const patchObject = { not_real: 1 };
+          return request
+            .patch("/api/comments/1")
+            .send(patchObject)
+            .expect(400);
+        });
+      });
+      describe("delete", () => {
+        it("204 deletes the comment by id", () => {
+          return request.del("/api/comments/1").expect(204);
+        });
+        it("returns a 405 error when bad method used", () => {
+          return request.get("/api/comments/1").expect(405);
+        });
+        it("returns 404 for bad path", () => {
+          return request.del("/api/comments/").expect(404);
+        });
+        it("returns 404 for non existant comment", () => {
+          return request.del("/api/comments/7000000").expect(404);
         });
       });
     });
