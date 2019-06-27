@@ -6,7 +6,7 @@ const expect = chai.expect;
 const { connection } = require("../connection");
 chai.use(require("chai-sorted"));
 
-describe.only("/api", () => {
+describe("/api", () => {
   beforeEach(() => {
     return connection.seed.run();
   });
@@ -43,7 +43,6 @@ describe.only("/api", () => {
       });
     });
   });
-  // -------vv
   describe("/articles", () => {
     describe("/articles only returns array of articles", () => {
       it("returns an array of article objects", () => {
@@ -83,7 +82,7 @@ describe.only("/api", () => {
         return request.get("/api/articlez/").expect(404);
       });
     });
-    //-----^^
+
     describe("/:articles_id", () => {
       describe("GET articles by id", () => {
         it("happy path, gets article by id", () => {
@@ -103,8 +102,10 @@ describe.only("/api", () => {
           return request.get("/api/articles/10000").expect(404);
         });
       });
-      describe('"patch article by id', () => {
-        it("happy path, article patched by id", () => {
+      //
+      //
+      describe.only('"patch article by id', () => {
+        it.only("happy path, article patched by id", () => {
           const patchObject = { inc_votes: 1 };
           return request
             .patch("/api/articles/1")
@@ -281,6 +282,11 @@ describe.only("/api", () => {
         });
         it("returns 404 for non existant comment", () => {
           return request.del("/api/comments/7000000").expect(404);
+        });
+      });
+      describe("/api/", () => {
+        it("returns a json of all available endpoints", () => {
+          return request.get("/api/").expect(200);
         });
       });
     });
