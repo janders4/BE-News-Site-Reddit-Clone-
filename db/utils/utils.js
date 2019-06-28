@@ -17,13 +17,14 @@ const makeRefObj = list => {
 const formatComments = (comments, articleRef) => {
   const newComments = [];
   comments.forEach((item, index) => {
-    newComments[index] = { ...item };
-    newComments[index].author = item["created_by"];
-    delete newComments[index]["created_by"];
-    newComments[index]["article_id"] = articleRef[item["belongs_to"]];
-    delete newComments[index]["belongs_to"];
+    const newObj = { ...item };
+    newObj.author = item["created_by"];
+    newObj.article_id = articleRef[item["belongs_to"]];
+    delete newObj["belongs_to"];
+    delete newObj["created_by"];
+    newComments.push(newObj);
   });
-  return formatDate(newComments);
+  return newComments;
 };
 
 module.exports = { formatDate, makeRefObj, formatComments };

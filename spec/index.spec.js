@@ -161,6 +161,14 @@ describe("/api", () => {
             .expect(201)
             .then(res => {
               expect(res.body.comment).to.be.an("object");
+              expect(res.body.comment).to.have.keys(
+                "article_id",
+                "author",
+                "body",
+                "comment_id",
+                "created_at",
+                "votes"
+              );
             });
         });
         it("returns a 405 error when bad method used", () => {

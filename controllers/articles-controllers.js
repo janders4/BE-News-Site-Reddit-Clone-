@@ -38,7 +38,7 @@ exports.postCommentById = (req, res, next) => {
   const postObject = req.body;
   postComment(postObject, article_id)
     .then(comment => {
-      res.status(201).send({ comment: { comment } });
+      res.status(201).send({ comment });
     })
     .catch(next);
 };

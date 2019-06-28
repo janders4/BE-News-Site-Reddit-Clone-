@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { formatDate, makeRefObj, formatComments } = require("../db/utils/utils");
 
-describe("formatDate", () => {
+describe.only("formatDate", () => {
   const testData = [
     {
       title: "Living in the shadow of a great man",
@@ -23,7 +23,7 @@ describe("formatDate", () => {
         topic: "mitch",
         author: "butter_bridge",
         body: "I find this existence challenging",
-        created_at: "Thu Nov 15 2018 12:21:54 GMT+0000 (Greenwich Mean Time)",
+        created_at: new Date(1542284514171),
         votes: 100
       }
     ]);
@@ -33,7 +33,7 @@ describe("formatDate", () => {
   });
 });
 
-describe("makeRefObj", () => {
+describe.only("makeRefObj", () => {
   const testData = [
     {
       article_id: "1",
@@ -70,18 +70,18 @@ describe("makeRefObj", () => {
   });
   it("returns a ref object when passed an array of 1 object", () => {
     expect(makeRefObj(testData)).to.eql({
-      "1": "Living in the shadow of a great man"
+      "Living in the shadow of a great man": "1"
     });
   });
   it("works for multiple objects in an array", () => {
     expect(makeRefObj(testData2)).to.eql({
-      "1": "Living in the shadow of a great man",
-      "1": "Living in the shadow of a great man"
+      "Living in the shadow of a great man": "1",
+      "Living in the shadow of a great man": "1"
     });
   });
 });
 
-describe("formatComments", () => {
+describe.only("formatComments", () => {
   it("returns a new array", () => {
     const input = [];
     expect(formatComments(input)).to.not.equal(input);
@@ -105,7 +105,7 @@ describe("formatComments", () => {
         belongs_to: "Living in the shadow of a great man",
         created_by: "tickle122",
         votes: -1,
-        created_at: 1468087638932
+        created_at: new Date(1468087638932)
       }
     ];
     const output = [
@@ -115,7 +115,7 @@ describe("formatComments", () => {
         article_id: "1",
         author: "tickle122",
         votes: -1,
-        created_at: "Sat Jul 09 2016 19:07:18 GMT+0100 (British Summer Time)"
+        created_at: new Date(1468087638932)
       }
     ];
     expect(formatComments(testData, dummyref)).to.eql(output);
