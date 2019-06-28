@@ -1,7 +1,5 @@
 # News Site Clone
 
-Inline-style:
-![logo](https://www.iconsdb.com/icons/preview/black/github-6-xxl.png "Logo")
 A node.js and express API sat on a postgres database for a news website based on Reddit.
 
 Found at: https://reddit-clone-john.herokuapp.com/api/articles/1/comments
