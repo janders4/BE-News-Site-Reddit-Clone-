@@ -42,6 +42,7 @@ exports.fetchArticlesNoId = params => {
 };
 
 exports.patchVotesById = (patchObject = { inc_votes: 0 }, article_id) => {
+  // currently throws a "22P02" error when passed no body
   return connection("articles")
     .where({ article_id })
     .increment({ votes: patchObject.inc_votes })

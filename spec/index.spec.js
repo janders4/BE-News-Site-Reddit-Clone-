@@ -106,7 +106,7 @@ describe("/api", () => {
           return request.get("/api/articles/10000").expect(404);
         });
       });
-      describe.only('"patch article by id', () => {
+      describe('"patch article by id', () => {
         it("happy path, article patched by id", () => {
           const patchObject = { inc_votes: 1 };
           return request
@@ -149,7 +149,7 @@ describe("/api", () => {
             .send(patchObject)
             .expect(400);
         });
-        it("returns 200 if no body is passed and returns unchanged object", () => {
+        it.only("returns 200 if no body is passed and returns unchanged object", () => {
           return request.patch("/api/articles/1").expect(200);
         });
       });
