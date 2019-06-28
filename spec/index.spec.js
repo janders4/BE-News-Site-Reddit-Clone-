@@ -23,6 +23,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
           });
       });
+
       it("returns a 405 error when bad method used", () => {
         return request.post("/api/topics").expect(405);
       });
@@ -148,17 +149,8 @@ describe("/api", () => {
             .send(patchObject)
             .expect(400);
         });
-        //////vvvvvvvvvvvv
-        it.only("400 if no patch object is sent it returns the unchanged object", () => {
-          return request
-            .patch("/api/articles/2")
-            .expect(401)
-            .then(res => {
-              expect(res.body.article).to.be.an("object");
-            });
-        });
       });
-      //^^^^^^^^^^^^^^^^^
+
       describe("post comment by article id. /articles/:article_id/comments", () => {
         it("happy path, posts a new comment by article id", () => {
           const postObject = {
@@ -252,6 +244,9 @@ describe("/api", () => {
             .get("/api/articles/1/comments?sort_by=cabbage&order=asc")
             .expect(400);
         });
+        it("returns 404 if article doesnt exist", () => {
+          return request.get("/api/articles/10000/comments").expect(404);
+        });
       });
     });
   });
@@ -320,5 +315,8 @@ describe("/api", () => {
 describe("/api/", () => {
   it("returns a json of all available endpoints", () => {
     return request.get("/api/").expect(200);
+  });
+  it("returns 405 for bad method", () => {
+    return request.del("/api/").expect(405);
   });
 });

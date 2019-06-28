@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { formatDate, makeRefObj, formatComments } = require("../db/utils/utils");
 
-describe.skip("formatDate", () => {
+describe("formatDate", () => {
   const testData = [
     {
       title: "Living in the shadow of a great man",
@@ -33,7 +33,7 @@ describe.skip("formatDate", () => {
   });
 });
 
-describe.skip("makeRefObj", () => {
+describe("makeRefObj", () => {
   const testData = [
     {
       article_id: "1",
@@ -81,7 +81,7 @@ describe.skip("makeRefObj", () => {
   });
 });
 
-describe.skip("formatComments", () => {
+describe("formatComments", () => {
   it("returns a new array", () => {
     const input = [];
     expect(formatComments(input)).to.not.equal(input);

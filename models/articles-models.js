@@ -10,6 +10,7 @@ exports.fetchArticleById = article_id => {
     .count("articles.article_id as comment_count")
     .returning("*")
     .then(([article]) => {
+      console.log(article);
       if (!article) {
         return Promise.reject({ status: 404, message: "not found" });
       } else {
@@ -75,6 +76,8 @@ exports.getComment = (article_id, params) => {
     .returning("*")
     .orderBy(params.sort_by || "created_at", params.order || "DESC")
     .then(comment => {
-      return comment;
+      if (comment.length === 0) {
+        return Promise.reject({ status: 404 });
+      } else return comment;
     });
 };
