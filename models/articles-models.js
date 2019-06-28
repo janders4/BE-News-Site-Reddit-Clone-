@@ -14,7 +14,7 @@ exports.fetchArticleById = article_id => {
         return Promise.reject({ status: 404, message: "not found" });
       } else {
         article.comment_count = parseInt(article.comment_count);
-        return { article: article };
+        return article;
       }
     });
 };
@@ -46,21 +46,26 @@ exports.patchVotesById = (patchObject, article_id) => {
     .increment({ votes: patchObject.inc_votes })
     .returning("*")
     .then(([article]) => {
-      return { article: article };
+      return article;
     });
 };
 
 exports.postComment = (postObject, article_id) => {
   return connection("comments")
     .where({ article_id })
-    .insert({ author: postObject.username, body: postObject.body })
+    .insert({
+      author: postObject.username,
+      body: postObject.body,
+      article_id: article_id
+    })
     .returning("*")
     .then(([comment]) => {
-      return { comment: { comment } };
+      if (comment.length === 0) {
+        return Promise.reject({ status: 404 });
+      } else return comment;
     });
 };
 
-//insert params for sorting query
 exports.getComment = (article_id, params) => {
   return connection("comments")
     .select("*")

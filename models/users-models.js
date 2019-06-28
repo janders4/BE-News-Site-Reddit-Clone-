@@ -7,6 +7,8 @@ exports.fetchUserById = username => {
     .where({ username })
     .returning("*")
     .then(data => {
-      return data;
+      if (data.length === 0) {
+        return Promise.reject({ status: 404, msg: "invalid user" });
+      } else return data;
     });
 };

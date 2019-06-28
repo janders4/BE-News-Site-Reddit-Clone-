@@ -6,7 +6,7 @@ exports.patchVotes = ({ inc_votes }, comment_id) => {
     .increment({ votes: inc_votes })
     .returning("*")
     .then(([comment]) => {
-      return { comment };
+      return comment;
     });
 };
 

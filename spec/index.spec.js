@@ -41,6 +41,9 @@ describe("/api", () => {
       it("returns a 405 error when bad method used", () => {
         return request.post("/api/users/butter_bridge").expect(405);
       });
+      it("returns 404 if no user exists", () => {
+        return request.get("/api/users/donkey_kong").expect(404);
+      });
     });
   });
   describe("/articles", () => {
@@ -173,7 +176,7 @@ describe("/api", () => {
         it("returns 400 when patching a value with incorrect type", () => {
           const postObject = {
             username: 12,
-            body: "don't be fooled, this book is pure filth"
+            body: 1
           };
           return request
             .post("/api/articles/1/comments")
@@ -182,6 +185,16 @@ describe("/api", () => {
         });
         it("returns 404 for bad path", () => {
           return request.post("/api/articles/10000/ccc").expect(404);
+        });
+        it("returns 404 if user doesnt exist", () => {
+          const postObject = {
+            username: "daveyjones",
+            body: "don't be fooled, this book is pure filth"
+          };
+          return request
+            .post("/api/articles/1/comments")
+            .send(postObject)
+            .expect(400);
         });
       });
       describe("get comment by article id. /articles/:article_id/comments", () => {

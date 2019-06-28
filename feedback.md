@@ -7,10 +7,6 @@
 - formatDate has a lot of mutation going on. As a general rule if you need a new object, just make a new one rather than constantly mutating things and having to remember to copy them first.
 - Returning the call to formatDate in formatComments couples these two functions together. Keep them pure and just giving back their desired outputs with no side effects. This is much more extensible.
 
-## Server - Routing + Error handling
-
-- Your error handlers have .catch blocks attached to them. These should be removed.
-
 ## Controllers and Models
 
 - You are responding with the resources themselves, e.g. res.send(articles) You should always respond with an object.
@@ -18,14 +14,10 @@
 - Without it you will fail most of our tests. In the report below I've fixed most of them but you can see how many fail without it.
 - The fetchTopics model is constructing the response object. This is controllers responsibility and should happen there.
 - This happens in quite a few models. Make the models just return their data and the controllers control the response format.
-- You spelt queries wrong on the getCommentById controller.... now I'm just being fussy :P
--
 
 ### Utils
 
-- Update the test descriptions for formatDate. `it works` won't tell you anything in the future.
 - Some of these util tests are now failing. The utils themselves are fine but you haven't changed the tests.
-- The format comments tests are commented out. Feels bad. :(
 
 ## Test Output
 

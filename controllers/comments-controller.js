@@ -5,7 +5,7 @@ exports.updateVotes = (req, res, next) => {
   const patchObject = req.body;
   patchVotes(patchObject, commentId)
     .then(comment => {
-      res.status(200).send(comment);
+      res.status(200).send({ comment });
     })
     .catch(next);
 };

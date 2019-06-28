@@ -16,7 +16,7 @@ describe("formatDate", () => {
     const input = [];
     expect(formatDate(input)).to.not.equal(input);
   });
-  it("works for an array of objects", () => {
+  it("changes the date for multiple objects stored in an array", () => {
     expect(formatDate(testData)).to.eql([
       {
         title: "Living in the shadow of a great man",
