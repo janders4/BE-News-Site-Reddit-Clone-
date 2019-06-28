@@ -9,6 +9,111 @@
       "topics": [{ "slug": "football", "description": "Footie!" }]
     }
   },
+  "GET /api/articles/:article_id": {
+    "description": "serves an array of all topics",
+    "queries": ["article_id"],
+    "exampleResponse": {
+      "article": {
+        "article_id": 1,
+        "title": "Running a Node App",
+        "body": "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with systemd long-term, and how to set it up in a production environment.",
+        "votes": 201,
+        "topic": "coding",
+        "author": "jessjelly",
+        "created_at": "2016-08-18T12:07:52.389Z",
+        "comment_count": 8
+      }
+    }
+  },
+  "GET /api/articles/:article_id": {
+    "description": "serves an array of all topics",
+    "queries": ["article_id"],
+    "exampleResponse": {
+      "article": {
+        "article_id": 1,
+        "title": "Running a Node App",
+        "body": "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with systemd long-term, and how to set it up in a production environment.",
+        "votes": 201,
+        "topic": "coding",
+        "author": "jessjelly",
+        "created_at": "2016-08-18T12:07:52.389Z",
+        "comment_count": 8
+      }
+    }
+  },
+  "GET/api/articles/:article_id/comments": {
+    "description": "gets a comments for a specific article",
+    "queries": ["article_id"],
+    "exampleResponse": {
+      "comments": [
+        {
+          "comment_id": 44,
+          "author": "grumpy19",
+          "article_id": 1,
+          "votes": 4,
+          "created_at": "2017-11-20T08:58:48.322Z",
+          "body": "Error est qui id corrupti et quod enim accusantium minus. Deleniti quae ea magni officiis et qui suscipit non."
+        }
+      ]
+    }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "posts a new comment on a specific article and returns it",
+    "queries": [
+      "article_id",
+      {
+        "username": "lurker",
+        "body": "don't be fooled"
+      }
+    ],
+    "exampleResponse": {
+      "comment": {
+        "comment": {
+          "comment_id": 309,
+          "author": "grumpy19",
+          "article_id": 4,
+          "votes": 0,
+          "created_at": "2019-06-28T11:46:09.146Z",
+          "body": "don't be fooled"
+        }
+      }
+    }
+  },
+  "PATCH /api/comments/:comment_id": {
+    "description": "adds or removes a vote from specific comment",
+    "queries": [
+      "comment_id",
+      {
+        "inc_votes": 1
+      }
+    ],
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 2,
+        "author": "grumpy19",
+        "article_id": 4,
+        "votes": 8,
+        "created_at": "2016-11-10T21:26:49.256Z",
+        "body": "Nobis consequatur animi. Ullam nobis quaerat voluptates veniam."
+      }
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "serves the user by id",
+    "queries": ["username"],
+    "exampleResponse": {
+      "user": {
+        "username": "weegembump",
+        "avatar_url": "https://www.upandrunning.co.uk/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/m/r/mr-bump.jpg",
+        "name": "Gemma Bump"
+      }
+    }
+  },
+  "delete: /api/comments/:comment_id": {
+    "description": "deletes a comment based on ID",
+    "queries": ["username"],
+    "example response": "no body"
+  },
   "GET /api/articles": {
     "description": "serves an array of all topics",
     "queries": ["author", "topic", "sort_by", "order"],

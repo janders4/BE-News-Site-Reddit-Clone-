@@ -40,13 +40,15 @@ exports.fetchArticlesNoId = params => {
     });
 };
 
-exports.patchVotesById = (patchObject, article_id) => {
+exports.patchVotesById = (patchObject = { inc_votes: 0 }, article_id) => {
   return connection("articles")
     .where({ article_id })
     .increment({ votes: patchObject.inc_votes })
     .returning("*")
     .then(([article]) => {
-      return article;
+      if (patchObject.inc_votes === 0) {
+        return Promise.reject({ status: 401, article: article });
+      } else return article;
     });
 };
 

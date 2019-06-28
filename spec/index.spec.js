@@ -148,7 +148,17 @@ describe("/api", () => {
             .send(patchObject)
             .expect(400);
         });
+        //////vvvvvvvvvvvv
+        it.only("400 if no patch object is sent it returns the unchanged object", () => {
+          return request
+            .patch("/api/articles/2")
+            .expect(401)
+            .then(res => {
+              expect(res.body.article).to.be.an("object");
+            });
+        });
       });
+      //^^^^^^^^^^^^^^^^^
       describe("post comment by article id. /articles/:article_id/comments", () => {
         it("happy path, posts a new comment by article id", () => {
           const postObject = {
@@ -303,11 +313,12 @@ describe("/api", () => {
           return request.del("/api/comments/7000000").expect(404);
         });
       });
-      describe("/api/", () => {
-        it("returns a json of all available endpoints", () => {
-          return request.get("/api/").expect(200);
-        });
-      });
     });
+  });
+});
+
+describe("/api/", () => {
+  it("returns a json of all available endpoints", () => {
+    return request.get("/api/").expect(200);
   });
 });

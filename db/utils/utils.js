@@ -16,7 +16,7 @@ const makeRefObj = list => {
 
 const formatComments = (comments, articleRef) => {
   const newComments = [];
-  comments.forEach((item, index) => {
+  comments.forEach(item => {
     const newObj = { ...item };
     newObj.author = item["created_by"];
     newObj.article_id = articleRef[item["belongs_to"]];
