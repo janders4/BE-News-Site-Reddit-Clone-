@@ -106,7 +106,7 @@ describe("/api", () => {
           return request.get("/api/articles/10000").expect(404);
         });
       });
-      describe('"patch article by id', () => {
+      describe.only('"patch article by id', () => {
         it("happy path, article patched by id", () => {
           const patchObject = { inc_votes: 1 };
           return request
@@ -148,6 +148,9 @@ describe("/api", () => {
             .patch("/api/articles/1")
             .send(patchObject)
             .expect(400);
+        });
+        it("returns 200 if no body is passed and returns unchanged object", () => {
+          return request.patch("/api/articles/1").expect(200);
         });
       });
 
@@ -191,10 +194,21 @@ describe("/api", () => {
           return request
             .post("/api/articles/1/comments")
             .send(postObject)
-            .expect(400);
+            .expect(404);
         });
         it("returns 404 for bad path", () => {
           return request.post("/api/articles/10000/ccc").expect(404);
+        });
+
+        it("returns 400 if invalid article id", () => {
+          const postObject = {
+            username: "lurker",
+            body: "don't be fooled, this book is pure filth"
+          };
+          return request
+            .post("/api/articles/donkeykong12/comments")
+            .send(postObject)
+            .expect(400);
         });
         it("returns 404 if user doesnt exist", () => {
           const postObject = {
@@ -204,7 +218,24 @@ describe("/api", () => {
           return request
             .post("/api/articles/1/comments")
             .send(postObject)
+            .expect(404);
+        });
+        it("returns 400 when allrequired keys are no preset in post object", () => {
+          const postObject = {};
+          return request
+            .post("/api/articles/1/comments")
+            .send(postObject)
             .expect(400);
+        });
+        it("returns 404 if article doesn't exsit", () => {
+          const postObject = {
+            username: "lurker",
+            body: "don't be fooled, this book is pure filth"
+          };
+          return request
+            .post("/api/articles/1000420/comments")
+            .send(postObject)
+            .expect(404);
         });
       });
       describe("get comment by article id. /articles/:article_id/comments", () => {
@@ -292,6 +323,20 @@ describe("/api", () => {
             .patch("/api/comments/1")
             .send(patchObject)
             .expect(400);
+        });
+        it("returns 404 if a user is not found with an invalid id", () => {
+          const patchObj = { inc_votes: 2 };
+          return request
+            .patch("/api/comments/daveyjones")
+            .send(patchObj)
+            .expect(400);
+        });
+        it("returns 404 when valid id passed but does not exist", () => {
+          const patchObj = { inc_votes: 2 };
+          return request
+            .patch("/api/comments/11111111111")
+            .send(patchObj)
+            .expect(404);
         });
       });
       describe("delete", () => {
