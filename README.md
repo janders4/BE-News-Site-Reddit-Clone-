@@ -2,7 +2,7 @@
 
 A node.js and express API sat on a postgres database for a news website based on Reddit.
 
-Found at: https://reddit-clone-john.herokuapp.com/api/articles/1/comments
+Found at: https://reddit-clone-john.herokuapp.com/api/
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ You will need to have Node installed before installing other dependencies. Infor
 
 Installation
 Clone this repository
-git clone https://github.com/timothydowd/BE-NC-News.git
+git clone https://github.com/janders4/BE-News-Site-Reddit-Clone-.git
 Install the dependencies
 
 ```
@@ -68,7 +68,7 @@ Note: GET request can be ran from a browser using "localhost:9090" before an end
 
 To view a deployed version of this site, go to:
 
-https://reddit-clone-john.herokuapp.com/api/articles/1/comments
+https://reddit-clone-john.herokuapp.com/api/
 
 ## Built With
 
